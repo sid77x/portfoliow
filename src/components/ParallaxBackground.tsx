@@ -1,10 +1,10 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 
 export function ParallaxBackground() {
   const boundsRef = useRef<HTMLDivElement>(null);
   const [showDragHint, setShowDragHint] = useState(true);
-  const { scrollYProgress } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
 
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -400]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, -700]);
@@ -19,6 +19,12 @@ export function ParallaxBackground() {
   const hashRotate = useTransform(scrollYProgress, [0, 1], [-12, 16]);
 
   const dismissHint = () => setShowDragHint(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > 8) {
+      setShowDragHint(false);
+    }
+  });
 
   const draggableProps = {
     drag: true as const,
@@ -206,6 +212,7 @@ export function ParallaxBackground() {
       {showDragHint && (
         <motion.div
           className="absolute right-[28%] top-[31%] z-[70] pointer-events-none"
+          style={{ translateY: y3 }}
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
