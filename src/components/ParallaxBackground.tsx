@@ -1,8 +1,9 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export function ParallaxBackground() {
   const boundsRef = useRef<HTMLDivElement>(null);
+  const [showDragHint, setShowDragHint] = useState(true);
   const { scrollYProgress } = useScroll();
 
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -400]);
@@ -16,6 +17,8 @@ export function ParallaxBackground() {
   const scale1 = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1.1, 0.85]);
   const sqlSlideIn = useTransform(scrollYProgress, [0, 1], [-120, -28]);
   const hashRotate = useTransform(scrollYProgress, [0, 1], [-12, 16]);
+
+  const dismissHint = () => setShowDragHint(false);
 
   const draggableProps = {
     drag: true as const,
@@ -32,6 +35,7 @@ export function ParallaxBackground() {
       scale: 1.03,
       zIndex: 60,
     },
+    onDragStart: dismissHint,
   };
 
   const idleCodeTone = "text-zinc-500/75 dark:text-zinc-500/70";
@@ -190,6 +194,7 @@ export function ParallaxBackground() {
         {...draggableProps}
         className="absolute right-[15%] top-[2%] group pointer-events-auto"
         style={{ translateY: y3 }}
+        onHoverStart={dismissHint}
       >
         <span className="inline-block px-3 text-zinc-400/35 dark:text-zinc-500/35 text-[200px] font-mono leading-none select-none [font-variant-ligatures:none] transition-all duration-300 group-hover:[text-shadow:0_0_36px_rgba(56,189,248,0.95)]">
           <span className="group-hover:text-sky-400/90">{"<"}</span>
@@ -197,6 +202,20 @@ export function ParallaxBackground() {
           <span className="group-hover:text-sky-400/90">{">"}</span>
         </span>
       </motion.div>
+
+      {showDragHint && (
+        <motion.div
+          className="absolute right-[28%] top-[31%] z-[70] pointer-events-none"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+        >
+          <div className="flex items-center gap-2 rounded-sm border border-zinc-500/35 bg-black/35 px-3 py-1.5 text-xs md:text-sm font-body text-zinc-400/95 dark:text-zinc-400/90 tracking-wide [text-shadow:0_1px_0_rgba(0,0,0,0.35)] backdrop-blur-[1px]">
+            <span className="text-lg leading-none">↗</span>
+            <span>Try dragging this</span>
+          </div>
+        </motion.div>
+      )}
 
       {/* Large semicolons cascade */}
       <motion.div
