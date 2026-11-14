@@ -1,9 +1,9 @@
 import { FadeIn } from "./FadeIn";
 
 const techs = [
-  "Python", "TypeScript", "React", "TensorFlow", "PyTorch", "Docker",
+  "Python", "C#", ".NET", "TypeScript", "React", "TensorFlow", "PyTorch", "Docker",
   "Kubernetes", "FastAPI", "PostgreSQL", "MongoDB", "AWS", "GCP",
-  "LangChain", "OpenCV", "Scikit-learn", "Git", "Linux", "Node.js",
+  "LangChain", "RAG", "Apigee", "API Testing", "OpenCV", "Scikit-learn", "Git", "Linux", "Node.js",
 ];
 
 export function Technologies() {
