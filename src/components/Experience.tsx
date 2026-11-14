@@ -2,6 +2,14 @@ import { FadeIn } from "./FadeIn";
 
 const experiences = [
   {
+    role: "Technology Program Intern",
+    org: "Wells Fargo",
+    items: [
+      "Engineered an end-to-end API testing platform in .NET and C# for mass API testing, integrated with Apigee, reducing employee effort by 85%",
+      "Built a RAG-based log analysis tool that ingests large logs and recommends fixes using enterprise knowledge and best practices, improving troubleshooting efficiency by 40%",
+    ],
+  },
+  {
     role: "AI Engineering Intern",
     org: "KognitoAI",
     items: [
